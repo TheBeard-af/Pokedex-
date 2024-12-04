@@ -73,6 +73,8 @@ let pokemonRepository = (function () {
     closeButtonElement.innerText = "Close";
     closeButtonElement.addEventListener('click', hideModal);
 
+    modalContainer.classList.add('is-visible');
+
     let pokemonName = document.createElement('h1');
     pokemonName.innerText = title;
 
@@ -89,8 +91,6 @@ let pokemonRepository = (function () {
     modal.appendChild(pokemonHeight);
     modal.appendChild(pokemonImage);
     modalContainer.appendChild(modal);
-
-    modalContainer.classList.add('is-visible');
 
     modalContainer.addEventListener('click', (e) => {
         let target = e.target;
