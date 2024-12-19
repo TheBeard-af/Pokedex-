@@ -26,16 +26,17 @@ let pokemonRepository = (function () {
     })
   }
 
-  function loadDetails(item) {
-    let url = item.detailsUrl;
-    return fetch(url).then(function (response) {
+  function loadDetails(pokemon) {
+    let url = pokemon.detailsUrl;
+    return fetch(url)
+    .then(function (response) {
       return response.json();
     }).then(function (details) {
 	    // Add details to the pokemon object
       pokemon.imageUrl = details.sprites.front_default;
       pokemon.height = details.height;
       pokemon.weight = details.weight;
-      pokemon.types = details.types;
+      pokemon.types = details.types.map((type) => type.type.name);
     }).catch(function (e) {
       console.error(e);
     });
@@ -60,20 +61,23 @@ let pokemonRepository = (function () {
     });
   }
 
-  function addListItem(pokemon) {
-    let newlist = document.querySelector(".pokemon-list");
-    let listpokemon = document.createElement("li");
-    listItem.classList.add('list-group-item');
+	function addListItem(pokemon) {
+		let pokemonListElement = document.querySelector('.pokemon-list');
+		let listItem = document.createElement('li');
+		listItem.classList.add('list-group-item');
 
-    let button = document.createElement("button");
-    button.innerText = pokemon.name;
-    button.classList.add('btn', 'btn-primary', 'w-100');
-    button.addEventListener('click', () => showDetails(pokemon));
+		let button = document.createElement('button');
+		button.innerText = pokemon.name;
+		button.classList.add('btn', 'btn-primary', 'w-100');
+		button.addEventListener('click', function () {
+			showDetails(pokemon);
+		});
 
-    listpokemon.appendChild(button);
-    newlist.appendChild(listpokemon);
+		listItem.appendChild(button);
+		pokemonListElement.appendChild(listItem);
+	}
 
-  }
+  
 
   // function showModal(item) {
   //   let modalBody = $(".modal-body");
@@ -107,10 +111,10 @@ let pokemonRepository = (function () {
   return {
     add: add,
     getAll: getAll,
+    loadList: loadList,
+    loadDetails: loadDetails,
     addListItem: addListItem,
     showDetails: showDetails,
-    loadList: loadList,
-    loadDetails: loadDetails
   };
 })();
 
