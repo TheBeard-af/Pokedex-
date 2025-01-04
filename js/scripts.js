@@ -1,6 +1,6 @@
-let pokemonRepository = (function () {
-  let pokemonList = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+const pokemonRepository = (function () {
+  const pokemonList = [];
+  const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
   function getAll() {
     return pokemonList;
@@ -15,7 +15,7 @@ let pokemonRepository = (function () {
       return response.json();
     }).then(function (json) {
       json.results.forEach(function (item) {
-        let pokemon = {
+        const pokemon = {
           name: item.name,
           detailsUrl: item.url
         };
@@ -23,11 +23,11 @@ let pokemonRepository = (function () {
       });
     }).catch(function (e) {
       console.error(e);
-    })
+    });
   }
 
   function loadDetails(pokemon) {
-    let url = pokemon.detailsUrl;
+    const url = pokemon.detailsUrl;
     return fetch(url)
     .then(function (response) {
       return response.json();
@@ -44,11 +44,11 @@ let pokemonRepository = (function () {
 
   function showDetails(pokemon) {
 		loadDetails(pokemon).then(function () {
-			let modalTitle = document.querySelector('#pokemonModalLabel');
-			let modalImage = document.querySelector('.pokemon-image');
-			let modalHeight = document.querySelector('.pokemon-height');
-			let modalWeight = document.querySelector('.pokemon-weight');
-			let modalTypes = document.querySelector('.pokemon-types');
+			const modalTitle = document.querySelector('#pokemonModalLabel');
+			const modalImage = document.querySelector('.pokemon-image');
+			const modalHeight = document.querySelector('.pokemon-height');
+			const modalWeight = document.querySelector('.pokemon-weight');
+			const modalTypes = document.querySelector('.pokemon-types');
 
 			modalTitle.innerText = pokemon.name;
 			modalImage.src = pokemon.imageUrl;
@@ -62,11 +62,11 @@ let pokemonRepository = (function () {
   }
 
 	function addListItem(pokemon) {
-		let pokemonListElement = document.querySelector('.pokemon-list');
-		let listItem = document.createElement('li');
+		const pokemonListElement = document.querySelector('.pokemon-list');
+		const listItem = document.createElement('li');
 		listItem.classList.add('list-group-item');
 
-		let button = document.createElement('button');
+		const button = document.createElement('button');
 		button.innerText = pokemon.name;
 		button.classList.add('btn', 'btn-primary', 'w-30');
 		button.addEventListener('click', function () {
